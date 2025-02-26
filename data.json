@@ -1,0 +1,136 @@
+[
+  {
+    "nom": "Contrats de travail",
+    "departement": "RH",
+    "signature": "Qualifiée (principaux) ; Avancée (modifications mineures)",
+    "justification": "Art. L.1221-4 Code du travail ; eIDAS Art. 25.2 (présomption de validité)",
+    "risques": "Nullité du contrat ; sanctions prud’homales (jusqu’à 6 mois de salaire)",
+    "exemples": "CDI, CDD, avenants salariaux",
+    "comparaison": "Signature simple : pas d’inversion de la charge de la preuve en litige",
+    "specificites": "Reconnaissance SEQ dans l’UE ; hors UE, SEQ exigée pour expatriés (ex. : USA, notarisation possible)"
+  },
+  {
+    "nom": "Accords de confidentialité",
+    "departement": "Juridique",
+    "signature": "Avancée (standard) ; Qualifiée (secrets critiques)",
+    "justification": "RGPD Art. 32 (sécurité) ; Directive UE 2016/943 (secrets commerciaux)",
+    "risques": "Amendes RGPD (4% CA annuel) ; perte de propriété intellectuelle",
+    "exemples": "NDA partenaires technologiques",
+    "comparaison": "Simple : aucune détection d’altération post-signature",
+    "specificites": "SEQ pour accords avec USA (SOX Act) ou données sensibles ; avancée suffisante sinon"
+  },
+  {
+    "nom": "Transactions financières",
+    "departement": "Finance",
+    "signature": "Qualifiée (>50k€) ; Avancée (<50k€)",
+    "justification": "Directive PSD2 (2015/2366) Art. 4 ; eIDAS Art. 26 (non-répudiation)",
+    "risques": "Irrecevabilité comptable ; rejet audits fiscaux (amendes jusqu’à 375k€)",
+    "exemples": "Mandats SEPA, factures électroniques",
+    "comparaison": "Simple : interdite pour paiements >50k€ (risque fraude)",
+    "specificites": "SEQ obligatoire pour virements transfrontaliers (CBPR+) ; avancée reconnue dans l’UE"
+  },
+  {
+    "nom": "Contrats de sous-traitance",
+    "departement": "Achats",
+    "signature": "Qualifiée",
+    "justification": "Loi Sapin II Art. 17 ; RGPD Art. 28 (sous-traitance données) ; Décret 2022-448",
+    "risques": "Responsabilité pénale dirigeants ; exclusion appels d’offres",
+    "exemples": "Contrats SLA, engagements de service",
+    "comparaison": "Simple : clauses de pénalité non opposables",
+    "specificites": "Double SEQ (siège + filiale) pour groupes internationaux ; RGPD exige SEQ hors UE"
+  },
+  {
+    "nom": "Licences logicielles",
+    "departement": "R&D",
+    "signature": "Avancée (standard) ; Qualifiée (exclusives)",
+    "justification": "Directive 2009/24/CE (protection logiciels) ; eIDAS Art. 25",
+    "risques": "Contrefaçon (amendes 300% dommages) ; perte de revenus licence",
+    "exemples": "EULA, accords partenariat technique",
+    "comparaison": "Simple : pas d’intégrité cryptographique des clauses",
+    "specificites": "Horodatage qualifié pour marchés asiatiques (ex. : Japon, normes JIS)"
+  },
+  {
+    "nom": "Appels d’offres publics",
+    "departement": "Commercial",
+    "signature": "Qualifiée",
+    "justification": "Code de la commande publique Art. R2191-1 ; eIDAS Art. 25",
+    "risques": "Déchéance offre ; exclusion temporaire marchés publics",
+    "exemples": "Réponses consultations, DPGF",
+    "comparaison": "SEA irrecevables dans 78% des appels d’offres européens",
+    "specificites": "SEQ reconnue dans l’UE ; hors UE, légalisation consulaire souvent requise"
+  },
+  {
+    "nom": "Documents réglementaires",
+    "departement": "Compliance",
+    "signature": "Qualifiée (soumis régulateurs) ; Avancée (internes)",
+    "justification": "Règlement DORA (2025) ; ETSI EN 319 411-1 (certificats qualifiés)",
+    "risques": "Amendes jusqu’à 10M€ ; suspension agrément",
+    "exemples": "Rapports ANSSI, audits sécurité",
+    "comparaison": "SEQ : non-répudiation exigée par régulateurs",
+    "specificites": "Certificats SEQ alignés ETSI pour UE ; hors UE, normes locales à vérifier (ex. : NIST USA)"
+  },
+  {
+    "nom": "Contrats internationaux",
+    "departement": "Business Development",
+    "signature": "Qualifiée",
+    "justification": "Convention de Vienne (1980) Art. 11 ; Règlement Rome I (2008)",
+    "risques": "Conflits de loi ; nullité clauses arbitrage",
+    "exemples": "Joint-ventures, accords distribution",
+    "comparaison": "SEA rarement suffisante pour tribunaux étrangers",
+    "specificites": "QSCD exigé hors UE ; vérification reconnaissance (ex. : USA, notarisation)"
+  },
+  {
+    "nom": "Documents RH sensibles",
+    "departement": "RH",
+    "signature": "Qualifiée",
+    "justification": "CNIL délibération 2023-098 (données salariales) ; RGPD Art. 9 (données sensibles)",
+    "risques": "Sanctions CNIL (jusqu’à 3M€) ; litiges employés",
+    "exemples": "Enquêtes internes, accords de rupture",
+    "comparaison": "SEQ : prévient contestation authenticité consentements",
+    "specificites": "Archivage qualifié pour filiales suisses (LPD révisée) ; SEQ pour données transfrontalières"
+  },
+  {
+    "nom": "Actes de propriété intellectuelle",
+    "departement": "R&D",
+    "signature": "Qualifiée",
+    "justification": "Code propriété intellectuelle Art. L113-9 ; eIDAS Art. 25",
+    "risques": "Perte droits d’auteur ; contestation brevets",
+    "exemples": "Cessions droits, dépôts INPI",
+    "comparaison": "SEQ + horodatage : date certaine de création fixée",
+    "specificites": "Validation SEQ via WIPO Proof (193 États) ; horodatage reconnu internationalement"
+  },
+  {
+    "nom": "Transactions blockchain",
+    "departement": "Innovation",
+    "signature": "Avancée (standard) ; Qualifiée (actifs critiques)",
+    "justification": "Ordonnance 2024-387 (actifs numériques) ; eIDAS Art. 25",
+    "risques": "Irréversibilité smart contracts défectueux ; fraude",
+    "exemples": "Contrats DAO, tokens sécurisés",
+    "comparaison": "SEA : audit trail via metadata blockchain",
+    "specificites": "Interopérabilité ERC-725/1056 ; SEQ pour actifs hors UE (ex. : SEC compliance USA)"
+  },
+  {
+    "nom": "Souscriptions d’assurance",
+    "departement": "Administratif",
+    "signature": "Qualifiée (épargne) ; Avancée (standard)",
+    "justification": "Code des assurances Art. L112-4 ; Directive Insurance Distribution (2016/97)",
+    "risques": "Résiliation rétroactive ; refus couverture",
+    "exemples": "Polices responsabilité civile, épargne-retraite",
+    "comparaison": "SEQ obligatoire pour épargne-retraite (opposabilité)",
+    "specificites": "Reconnaissance limitée en Amérique latine (notarisation parallèle souvent exigée)"
+  },
+  {
+    "nom": "Conventions de gouvernance",
+    "departement": "Direction Générale",
+    "signature": "Qualifiée",
+    "justification": "Loi Pacte Art. 1833 Code civil ; eIDAS Art. 25 (présomption intégrité)",
+    "risques": "Nullité décisions AG ; responsabilité dirigeants",
+    "exemples": "PV d’AG, pactes actionnaires",
+    "comparaison": "SEA : pas de présomption intégrité sur 10 ans",
+    "specificites": "Double scellement pour filiales USA (Delaware Law) ; SEQ reconnue dans l’UE"
+  },
+  {
+    "nom": "Documentation projet",
+    "departement": "Management de projet",
+    "signature": "Avancée (standard) ; Qualifiée (critiques)",
+    "justification": "Norme ISO 21502:2020 ; eIDAS Art. 
