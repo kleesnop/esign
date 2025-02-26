@@ -4,57 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des cas d'usage</title>
-    <!-- CDN pour DataTables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-    <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Style personnalisé pour masquer les vues non actives */
-        .hidden {
-            display: none;
-        }
+        .hidden { display: none; }
     </style>
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto p-4">
-        <!-- Titre principal -->
         <h1 class="text-3xl font-bold mb-6 text-center">Cas d'usage</h1>
-        
-        <!-- Barre de navigation pour basculer entre les vues -->
         <nav class="mb-4 flex justify-center space-x-4">
             <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="showView('tableau')">Tableau</button>
             <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="showView('cartes')">Cartes</button>
             <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="showView('graphiques')">Graphiques</button>
         </nav>
-
-        <!-- Vue Tableau -->
         <div id="tableau" class="view">
             <table id="usageTable" class="display w-full">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Département</th>
-                        <th>Signature</th>
-                        <th>Justification</th>
-                        <th>Risques</th>
-                        <th>Exemples</th>
-                        <th>Comparaison</th>
-                        <th>Spécificités</th>
-                    </tr>
-                </thead>
+                <thead><tr><th>Nom</th><th>Département</th><th>Signature</th><th>Justification</th><th>Risques</th><th>Exemples</th><th>Comparaison</th><th>Spécificités</th></tr></thead>
             </table>
         </div>
-
-        <!-- Vue Cartes -->
         <div id="cartes" class="view hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-
-        <!-- Vue Graphiques -->
-        <div id="graphiques" class="view hidden">
-            <canvas id="chartCanvas" class="w-full"></canvas>
-        </div>
+        <div id="graphiques" class="view hidden"><canvas id="chartCanvas" class="w-full"></canvas></div>
     </div>
-
-    <!-- Scripts nécessaires -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -62,53 +33,35 @@
         let usageData = [];
         let chart;
 
-        // Charger les données JSON
         async function loadData() {
             try {
-                const response = await fetch('data.json'); // Assurez-vous que le fichier data.json existe
-                if (!response.ok) {
-                    throw new Error('Erreur lors du chargement du fichier JSON');
-                }
+                const response = await fetch('data.json');
+                console.log('Réponse :', response);
+                if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
                 usageData = await response.json();
+                console.log('Données :', usageData);
                 initializeTable();
                 loadCards();
                 loadCharts();
             } catch (error) {
-                console.error('Erreur lors du chargement des données JSON :', error);
-                document.getElementById('cartes').innerHTML = '<p class="text-red-500">Erreur : impossible de charger les données.</p>';
+                console.error('Erreur :', error);
+                document.getElementById('cartes').innerHTML = `<p class="text-red-500">Erreur : ${error.message}</p>`;
             }
         }
 
-        // Initialiser le tableau DataTables
         function initializeTable() {
             $('#usageTable').DataTable({
                 data: usageData,
                 columns: [
-                    { data: 'nom' },
-                    { data: 'departement' },
-                    { data: 'signature' },
-                    { data: 'justification' },
-                    { data: 'risques' },
-                    { data: 'exemples' },
-                    { data: 'comparaison' },
-                    { data: 'specificites' }
+                    { data: 'nom' }, { data: 'departement' }, { data: 'signature' },
+                    { data: 'justification' }, { data: 'risques' }, { data: 'exemples' },
+                    { data: 'comparaison' }, { data: 'specificites' }
                 ],
                 pageLength: 5,
-                language: {
-                    search: "Rechercher :",
-                    lengthMenu: "Afficher _MENU_ entrées",
-                    info: "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
-                    paginate: {
-                        first: "Premier",
-                        last: "Dernier",
-                        next: "Suivant",
-                        previous: "Précédent"
-                    }
-                }
+                language: { search: "Rechercher :", lengthMenu: "Afficher _MENU_ entrées", info: "Affichage de _START_ à _END_ sur _TOTAL_ entrées", paginate: { first: "Premier", last: "Dernier", next: "Suivant", previous: "Précédent" } }
             });
         }
 
-        // Générer les cartes dynamiques
         function loadCards() {
             const cartesDiv = document.getElementById('cartes');
             cartesDiv.innerHTML = '';
@@ -124,66 +77,26 @@
             });
         }
 
-        // Créer les graphiques avec Chart.js
         function loadCharts() {
             const ctx = document.getElementById('chartCanvas').getContext('2d');
             const departements = usageData.reduce((acc, item) => {
                 acc[item.departement] = (acc[item.departement] || 0) + 1;
                 return acc;
             }, {});
-
-            if (chart) {
-                chart.destroy();
-            }
-
+            if (chart) chart.destroy();
             chart = new Chart(ctx, {
                 type: 'bar',
-                data: {
-                    labels: Object.keys(departements),
-                    datasets: [{
-                        label: 'Nombre de cas d’usage par département',
-                        data: Object.values(departements),
-                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Nombre de cas d’usage'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Département'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top'
-                        }
-                    }
-                }
+                data: { labels: Object.keys(departements), datasets: [{ label: 'Nombre de cas par département', data: Object.values(departements), backgroundColor: 'rgba(54, 162, 235, 0.6)', borderColor: 'rgba(54, 162, 235, 1)', borderWidth: 1 }] },
+                options: { scales: { y: { beginAtZero: true, title: { display: true, text: 'Nombre' } }, x: { title: { display: true, text: 'Département' } } }, plugins: { legend: { display: true, position: 'top' } } }
             });
         }
 
-        // Gérer l'affichage des vues
         function showView(view) {
             document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
             document.getElementById(view).classList.remove('hidden');
-            if (view === 'graphiques' && usageData.length > 0) {
-                loadCharts();
-            }
+            if (view === 'graphiques' && usageData.length > 0) loadCharts();
         }
 
-        // Charger les données au démarrage
         document.addEventListener('DOMContentLoaded', loadData);
     </script>
 </body>
