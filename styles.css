@@ -1,35 +1,40 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+/* Masquer les vues non actives */
+.hidden {
+    display: none;
 }
 
+/* Style pour le conteneur principal */
 .container {
-    max-width: 1400px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1rem;
 }
 
+/* Style pour les cartes au survol */
 .card {
-    transition: all 0.3s ease;
+    transition: box-shadow 0.3s ease;
 }
 
 .card:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.details {
-    margin-top: 10px;
+/* Ajustements pour les écrans mobiles */
+@media (max-width: 640px) {
+    .container {
+        padding: 0.5rem;
+    }
+    nav {
+        flex-direction: column;
+        space-x-0 space-y-2;
+    }
+    #cartes {
+        grid-template-columns: 1fr;
+    }
 }
 
-.table-responsive {
-    overflow-x: auto;
-}
-
-.table th, .table td {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 200px;
-}
-
-.card-body p {
-    font-size: 0.9em;
+/* Style pour le canvas des graphiques */
+#chartCanvas {
+    max-height: 400px;
 }
