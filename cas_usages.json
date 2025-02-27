@@ -1,0 +1,142 @@
+[
+  {
+    "Nom du cas d’usage": "Contrats de travail",
+    "Département concerné": "RH",
+    "Niveau de signature recommandé": "Qualifiée (principaux) ; Avancée (modifications mineures)",
+    "Justification légale/réglementaire": "Art. L.1221-4 Code du travail ; eIDAS Art. 25.2 (présomption de validité)",
+    "Risques de non-conformité": "Nullité du contrat ; sanctions prud’homales (jusqu’à 6 mois de salaire)",
+    "Exemples de documents": "CDI, CDD, avenants salariaux",
+    "Comparaison avec signature simple": "Signature simple : pas d’inversion de la charge de la preuve en litige",
+    "Spécificités internationales": "Reconnaissance SEQ dans l’UE ; hors UE, SEQ exigée pour expatriés (ex. : USA, notarisation possible)"
+  },
+  {
+    "Nom du cas d’usage": "Accords de confidentialité",
+    "Département concerné": "Juridique",
+    "Niveau de signature recommandé": "Avancée (standard) ; Qualifiée (secrets critiques)",
+    "Justification légale/réglementaire": "RGPD Art. 32 (sécurité) ; Directive UE 2016/943 (secrets commerciaux)",
+    "Risques de non-conformité": "Amendes RGPD (4% CA annuel) ; perte de propriété intellectuelle",
+    "Exemples de documents": "NDA partenaires technologiques",
+    "Comparaison avec signature simple": "Simple : aucune détection d’altération post-signature",
+    "Spécificités internationales": "SEQ pour accords avec USA (SOX Act) ou données sensibles ; avancée suffisante sinon"
+  },
+  {
+    "Nom du cas d’usage": "Transactions financières",
+    "Département concerné": "Finance",
+    "Niveau de signature recommandé": "Qualifiée (>50k€) ; Avancée (<50k€)",
+    "Justification légale/réglementaire": "Directive PSD2 (2015/2366) Art. 4 ; eIDAS Art. 26 (non-répudiation)",
+    "Risques de non-conformité": "Irrecevabilité comptable ; rejet audits fiscaux (amendes jusqu’à 375k€)",
+    "Exemples de documents": "Mandats SEPA, factures électroniques",
+    "Comparaison avec signature simple": "Simple : interdite pour paiements >50k€ (risque fraude)",
+    "Spécificités internationales": "SEQ obligatoire pour virements transfrontaliers (CBPR+) ; avancée reconnue dans l’UE"
+  },
+  {
+    "Nom du cas d’usage": "Contrats de sous-traitance",
+    "Département concerné": "Achats",
+    "Niveau de signature recommandé": "Qualifiée",
+    "Justification légale/réglementaire": "Loi Sapin II Art. 17 ; RGPD Art. 28 (sous-traitance données) ; Décret 2022-448",
+    "Risques de non-conformité": "Responsabilité pénale dirigeants ; exclusion appels d’offres",
+    "Exemples de documents": "Contrats SLA, engagements de service",
+    "Comparaison avec signature simple": "Simple : clauses de pénalité non opposables",
+    "Spécificités internationales": "Double SEQ (siège + filiale) pour groupes internationaux ; RGPD exige SEQ hors UE"
+  },
+  {
+    "Nom du cas d’usage": "Licences logicielles",
+    "Département concerné": "R&D",
+    "Niveau de signature recommandé": "Avancée (standard) ; Qualifiée (exclusives)",
+    "Justification légale/réglementaire": "Directive 2009/24/CE (protection logiciels) ; eIDAS Art. 25",
+    "Risques de non-conformité": "Contrefaçon (amendes 300% dommages) ; perte de revenus licence",
+    "Exemples de documents": "EULA, accords partenariat technique",
+    "Comparaison avec signature simple": "Simple : pas d’intégrité cryptographique des clauses",
+    "Spécificités internationales": "Horodatage qualifié pour marchés asiatiques (ex. : Japon, normes JIS)"
+  },
+  {
+    "Nom du cas d’usage": "Appels d’offres publics",
+    "Département concerné": "Commercial",
+    "Niveau de signature recommandé": "Qualifiée",
+    "Justification légale/réglementaire": "Code de la commande publique Art. R2191-1 ; eIDAS Art. 25",
+    "Risques de non-conformité": "Déchéance offre ; exclusion temporaire marchés publics",
+    "Exemples de documents": "Réponses consultations, DPGF",
+    "Comparaison avec signature simple": "SEA irrecevables dans 78% des appels d’offres européens",
+    "Spécificités internationales": "SEQ reconnue dans l’UE ; hors UE, légalisation consulaire souvent requise"
+  },
+  {
+    "Nom du cas d’usage": "Documents réglementaires",
+    "Département concerné": "Compliance",
+    "Niveau de signature recommandé": "Qualifiée (soumis régulateurs) ; Avancée (internes)",
+    "Justification légale/réglementaire": "Règlement DORA (2025) ; ETSI EN 319 411-1 (certificats qualifiés)",
+    "Risques de non-conformité": "Amendes jusqu’à 10M€ ; suspension agrément",
+    "Exemples de documents": "Rapports ANSSI, audits sécurité",
+    "Comparaison avec signature simple": "SEQ : non-répudiation exigée par régulateurs",
+    "Spécificités internationales": "Certificats SEQ alignés ETSI pour UE ; hors UE, normes locales à vérifier (ex. : NIST USA)"
+  },
+  {
+    "Nom du cas d’usage": "Contrats internationaux",
+    "Département concerné": "Business Development",
+    "Niveau de signature recommandé": "Qualifiée",
+    "Justification légale/réglementaire": "Convention de Vienne (1980) Art. 11 ; Règlement Rome I (2008)",
+    "Risques de non-conformité": "Conflits de loi ; nullité clauses arbitrage",
+    "Exemples de documents": "Joint-ventures, accords distribution",
+    "Comparaison avec signature simple": "SEA rarement suffisante pour tribunaux étrangers",
+    "Spécificités internationales": "QSCD exigé hors UE ; vérification reconnaissance (ex. : USA, notarisation)"
+  },
+  {
+    "Nom du cas d’usage": "Documents RH sensibles",
+    "Département concerné": "RH",
+    "Niveau de signature recommandé": "Qualifiée",
+    "Justification légale/réglementaire": "CNIL délibération 2023-098 (données salariales) ; RGPD Art. 9 (données sensibles)",
+    "Risques de non-conformité": "Sanctions CNIL (jusqu’à 3M€) ; litiges employés",
+    "Exemples de documents": "Enquêtes internes, accords de rupture",
+    "Comparaison avec signature simple": "SEQ : prévient contestation authenticité consentements",
+    "Spécificités internationales": "Archivage qualifié pour filiales suisses (LPD révisée) ; SEQ pour données transfrontalières"
+  },
+  {
+    "Nom du cas d’usage": "Actes de propriété intellectuelle",
+    "Département concerné": "R&D",
+    "Niveau de signature recommandé": "Qualifiée",
+    "Justification légale/réglementaire": "Code propriété intellectuelle Art. L113-9 ; eIDAS Art. 25",
+    "Risques de non-conformité": "Perte droits d’auteur ; contestation brevets",
+    "Exemples de documents": "Cessions droits, dépôts INPI",
+    "Comparaison avec signature simple": "SEQ + horodatage : date certaine de création fixée",
+    "Spécificités internationales": "Validation SEQ via WIPO Proof (193 États) ; horodatage reconnu internationalement"
+  },
+  {
+    "Nom du cas d’usage": "Transactions blockchain",
+    "Département concerné": "Innovation",
+    "Niveau de signature recommandé": "Avancée (standard) ; Qualifiée (actifs critiques)",
+    "Justification légale/réglementaire": "Ordonnance 2024-387 (actifs numériques) ; eIDAS Art. 25",
+    "Risques de non-conformité": "Irréversibilité smart contracts défectueux ; fraude",
+    "Exemples de documents": "Contrats DAO, tokens sécurisés",
+    "Comparaison avec signature simple": "SEA : audit trail via metadata blockchain",
+    "Spécificités internationales": "Interopérabilité ERC-725/1056 ; SEQ pour actifs hors UE (ex. : SEC compliance USA)"
+  },
+  {
+    "Nom du cas d’usage": "Souscriptions d’assurance",
+    "Département concerné": "Administratif",
+    "Niveau de signature recommandé": "Qualifiée (épargne) ; Avancée (standard)",
+    "Justification légale/réglementaire": "Code des assurances Art. L112-4 ; Directive Insurance Distribution (2016/97)",
+    "Risques de non-conformité": "Résiliation rétroactive ; refus couverture",
+    "Exemples de documents": "Polices responsabilité civile, épargne-retraite",
+    "Comparaison avec signature simple": "SEQ obligatoire pour épargne-retraite (opposabilité)",
+    "Spécificités internationales": "Reconnaissance limitée en Amérique latine (notarisation parallèle souvent exigée)"
+  },
+  {
+    "Nom du cas d’usage": "Conventions de gouvernance",
+    "Département concerné": "Direction Générale",
+    "Niveau de signature recommandé": "Qualifiée",
+    "Justification légale/réglementaire": "Loi Pacte Art. 1833 Code civil ; eIDAS Art. 25 (présomption intégrité)",
+    "Risques de non-conformité": "Nullité décisions AG ; responsabilité dirigeants",
+    "Exemples de documents": "PV d’AG, pactes actionnaires",
+    "Comparaison avec signature simple": "SEA : pas de présomption intégrité sur 10 ans",
+    "Spécificités internationales": "Double scellement pour filiales USA (Delaware Law) ; SEQ reconnue dans l’UE"
+  },
+  {
+    "Nom du cas d’usage": "Documentation projet",
+    "Département concerné": "Management de projet",
+    "Niveau de signature recommandé": "Avancée (standard) ; Qualifiée (critiques)",
+    "Justification légale/réglementaire": "Norme ISO 21502:2020 ; eIDAS Art. 26 (intégrité)",
+    "Risques de non-conformité": "Litiges clients ; dépassements budgétaires non couverts",
+    "Exemples de documents": "Cahiers des charges, rapports avancement",
+    "Comparaison avec signature simple": "SEA : journalisation via RFC 3161",
+    "Spécificités internationales": "Harmonisation eIDAS pour UE ; FedRAMP (USA) exige SEQ pour projets critiques"
+  }
+]
