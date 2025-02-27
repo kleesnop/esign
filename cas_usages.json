@@ -1,7 +1,7 @@
 [
   {
     "Nom du cas d’usage": "Contrats de travail",
-    "Département concerné": "RH",
+    "Département": "RH",
     "Niveau de signature recommandé": "Qualifiée (principaux) ; Avancée (modifications mineures)",
     "Justification légale/réglementaire": "Art. L.1221-4 Code du travail ; eIDAS Art. 25.2 (présomption de validité)",
     "Risques de non-conformité": "Nullité du contrat ; sanctions prud’homales (jusqu’à 6 mois de salaire)",
@@ -11,7 +11,7 @@
   },
   {
     "Nom du cas d’usage": "Accords de confidentialité",
-    "Département concerné": "Juridique",
+    "Département": "Juridique",
     "Niveau de signature recommandé": "Avancée (standard) ; Qualifiée (secrets critiques)",
     "Justification légale/réglementaire": "RGPD Art. 32 (sécurité) ; Directive UE 2016/943 (secrets commerciaux)",
     "Risques de non-conformité": "Amendes RGPD (4% CA annuel) ; perte de propriété intellectuelle",
@@ -21,7 +21,7 @@
   },
   {
     "Nom du cas d’usage": "Transactions financières",
-    "Département concerné": "Finance",
+    "Département": "Finance",
     "Niveau de signature recommandé": "Qualifiée (>50k€) ; Avancée (<50k€)",
     "Justification légale/réglementaire": "Directive PSD2 (2015/2366) Art. 4 ; eIDAS Art. 26 (non-répudiation)",
     "Risques de non-conformité": "Irrecevabilité comptable ; rejet audits fiscaux (amendes jusqu’à 375k€)",
@@ -31,7 +31,7 @@
   },
   {
     "Nom du cas d’usage": "Contrats de sous-traitance",
-    "Département concerné": "Achats",
+    "Département": "Achats",
     "Niveau de signature recommandé": "Qualifiée",
     "Justification légale/réglementaire": "Loi Sapin II Art. 17 ; RGPD Art. 28 (sous-traitance données) ; Décret 2022-448",
     "Risques de non-conformité": "Responsabilité pénale dirigeants ; exclusion appels d’offres",
@@ -41,7 +41,7 @@
   },
   {
     "Nom du cas d’usage": "Licences logicielles",
-    "Département concerné": "R&D",
+    "Département": "R&D",
     "Niveau de signature recommandé": "Avancée (standard) ; Qualifiée (exclusives)",
     "Justification légale/réglementaire": "Directive 2009/24/CE (protection logiciels) ; eIDAS Art. 25",
     "Risques de non-conformité": "Contrefaçon (amendes 300% dommages) ; perte de revenus licence",
@@ -51,7 +51,7 @@
   },
   {
     "Nom du cas d’usage": "Appels d’offres publics",
-    "Département concerné": "Commercial",
+    "Département": "Commercial",
     "Niveau de signature recommandé": "Qualifiée",
     "Justification légale/réglementaire": "Code de la commande publique Art. R2191-1 ; eIDAS Art. 25",
     "Risques de non-conformité": "Déchéance offre ; exclusion temporaire marchés publics",
@@ -61,7 +61,7 @@
   },
   {
     "Nom du cas d’usage": "Documents réglementaires",
-    "Département concerné": "Compliance",
+    "Département": "Compliance",
     "Niveau de signature recommandé": "Qualifiée (soumis régulateurs) ; Avancée (internes)",
     "Justification légale/réglementaire": "Règlement DORA (2025) ; ETSI EN 319 411-1 (certificats qualifiés)",
     "Risques de non-conformité": "Amendes jusqu’à 10M€ ; suspension agrément",
@@ -71,7 +71,7 @@
   },
   {
     "Nom du cas d’usage": "Contrats internationaux",
-    "Département concerné": "Business Development",
+    "Département": "Business Development",
     "Niveau de signature recommandé": "Qualifiée",
     "Justification légale/réglementaire": "Convention de Vienne (1980) Art. 11 ; Règlement Rome I (2008)",
     "Risques de non-conformité": "Conflits de loi ; nullité clauses arbitrage",
@@ -81,7 +81,7 @@
   },
   {
     "Nom du cas d’usage": "Documents RH sensibles",
-    "Département concerné": "RH",
+    "Département": "RH",
     "Niveau de signature recommandé": "Qualifiée",
     "Justification légale/réglementaire": "CNIL délibération 2023-098 (données salariales) ; RGPD Art. 9 (données sensibles)",
     "Risques de non-conformité": "Sanctions CNIL (jusqu’à 3M€) ; litiges employés",
@@ -91,7 +91,7 @@
   },
   {
     "Nom du cas d’usage": "Actes de propriété intellectuelle",
-    "Département concerné": "R&D",
+    "Département": "R&D",
     "Niveau de signature recommandé": "Qualifiée",
     "Justification légale/réglementaire": "Code propriété intellectuelle Art. L113-9 ; eIDAS Art. 25",
     "Risques de non-conformité": "Perte droits d’auteur ; contestation brevets",
@@ -101,7 +101,7 @@
   },
   {
     "Nom du cas d’usage": "Transactions blockchain",
-    "Département concerné": "Innovation",
+    "Département": "Innovation",
     "Niveau de signature recommandé": "Avancée (standard) ; Qualifiée (actifs critiques)",
     "Justification légale/réglementaire": "Ordonnance 2024-387 (actifs numériques) ; eIDAS Art. 25",
     "Risques de non-conformité": "Irréversibilité smart contracts défectueux ; fraude",
@@ -111,7 +111,7 @@
   },
   {
     "Nom du cas d’usage": "Souscriptions d’assurance",
-    "Département concerné": "Administratif",
+    "Département": "Administratif",
     "Niveau de signature recommandé": "Qualifiée (épargne) ; Avancée (standard)",
     "Justification légale/réglementaire": "Code des assurances Art. L112-4 ; Directive Insurance Distribution (2016/97)",
     "Risques de non-conformité": "Résiliation rétroactive ; refus couverture",
@@ -121,7 +121,7 @@
   },
   {
     "Nom du cas d’usage": "Conventions de gouvernance",
-    "Département concerné": "Direction Générale",
+    "Département": "Direction Générale",
     "Niveau de signature recommandé": "Qualifiée",
     "Justification légale/réglementaire": "Loi Pacte Art. 1833 Code civil ; eIDAS Art. 25 (présomption intégrité)",
     "Risques de non-conformité": "Nullité décisions AG ; responsabilité dirigeants",
@@ -131,7 +131,7 @@
   },
   {
     "Nom du cas d’usage": "Documentation projet",
-    "Département concerné": "Management de projet",
+    "Département": "Management de projet",
     "Niveau de signature recommandé": "Avancée (standard) ; Qualifiée (critiques)",
     "Justification légale/réglementaire": "Norme ISO 21502:2020 ; eIDAS Art. 26 (intégrité)",
     "Risques de non-conformité": "Litiges clients ; dépassements budgétaires non couverts",
