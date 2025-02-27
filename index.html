@@ -41,20 +41,20 @@
     
     /* Conteneur des cas d’usage (2 tuiles max par ligne) */
     #casContainer {
-      display: flex;              /* On utilise flex pour répartir les tuiles */
-      flex-wrap: wrap;            /* Autoriser le retour à la ligne */
-      justify-content: center;    /* Centrer le contenu */
-      gap: 20px;                  /* Espacement horizontal/vertical */
-      max-width: 1200px;          /* Largeur max du conteneur */
-      margin: 0 auto;            /* Centrer le conteneur */
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
       padding: 10px;
     }
     
-    /* Chaque tuile occupe 45% de la largeur (pour en avoir 2 par ligne) */
+    /* Chaque tuile occupe ~50% de la largeur pour en avoir 2 par ligne */
     .case-card {
       background: #fff;
-      flex: 0 0 calc(50% - 20px); /* 2 par ligne => ~50%, en tenant compte du gap */
-      margin: 0;                  /* on laisse le gap gérer l'espacement */
+      flex: 0 0 calc(50% - 20px);
+      margin: 0;
       padding: 15px;
       border-radius: 4px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -113,7 +113,7 @@
       color: #004080;
     }
     
-    /* Responsive : sur mobile (max 768px), on passe à 1 tuile par ligne */
+    /* Responsive : sur mobile, 1 tuile par ligne */
     @media (max-width: 768px) {
       .case-card {
         flex: 0 0 100%;
@@ -127,13 +127,10 @@
     <h1>Visualisation des Cas d'Usage</h1>
   </header>
   
-  <!-- Filtres -->
+  <!-- Filtres : un seul, pour le département -->
   <div id="filters">
     <select id="departmentFilter">
       <option value="">Tous les départements</option>
-    </select>
-    <select id="signatureFilter">
-      <option value="">Tous les niveaux de signature</option>
     </select>
   </div>
   
@@ -152,7 +149,6 @@
     document.addEventListener("DOMContentLoaded", function() {
       const casContainer = document.getElementById("casContainer");
       const departmentFilter = document.getElementById("departmentFilter");
-      const signatureFilter = document.getElementById("signatureFilter");
       const modal = document.getElementById("modal");
       const modalDetails = document.getElementById("modalDetails");
       const closeModal = document.querySelector(".close");
@@ -164,31 +160,27 @@
         .then(response => response.json())
         .then(jsonData => {
           data = jsonData;
-          // Tri par ordre alphabétique, basé sur "Nom du cas d’usage"
+          // Tri par ordre alphabétique basé sur "Nom du cas d’usage"
           data.sort((a, b) => {
             const nameA = a["Nom du cas d’usage"]?.toUpperCase() || "";
             const nameB = b["Nom du cas d’usage"]?.toUpperCase() || "";
             return nameA.localeCompare(nameB);
           });
 
-          populateFilters();
+          populateDepartmentFilter();
           displayCases(data);
         })
         .catch(error => {
           console.error("Erreur lors du chargement du JSON :", error);
         });
 
-      // Remplissage des menus de filtres avec les valeurs uniques
-      function populateFilters() {
+      // Remplissage du menu de filtre (Département)
+      function populateDepartmentFilter() {
         const departments = new Set();
-        const signatures = new Set();
 
         data.forEach(item => {
           if (item["Département"]) {
             departments.add(item["Département"]);
-          }
-          if (item["Niveau de signature recommandé"]) {
-            signatures.add(item["Niveau de signature recommandé"]);
           }
         });
 
@@ -198,32 +190,20 @@
           option.textContent = dep;
           departmentFilter.appendChild(option);
         });
-
-        signatures.forEach(sig => {
-          const option = document.createElement("option");
-          option.value = sig;
-          option.textContent = sig;
-          signatureFilter.appendChild(option);
-        });
       }
 
-      // Écoute des changements sur les filtres
+      // Écoute des changements sur le filtre Département
       departmentFilter.addEventListener("change", filterCases);
-      signatureFilter.addEventListener("change", filterCases);
 
-      // Filtrer les cas d'usage selon les filtres sélectionnés
+      // Filtrer les cas d'usage selon le département sélectionné
       function filterCases() {
         const selectedDept = departmentFilter.value;
-        const selectedSig = signatureFilter.value;
 
         // On filtre la data d'origine, puis on trie par ordre alphabétique
         let filtered = data.filter(item => {
-          const deptMatch = selectedDept ? item["Département"] === selectedDept : true;
-          const sigMatch = selectedSig ? item["Niveau de signature recommandé"] === selectedSig : true;
-          return deptMatch && sigMatch;
+          return selectedDept ? item["Département"] === selectedDept : true;
         });
 
-        // Tri par ordre alphabétique après le filtrage (optionnel, pour rester cohérent)
         filtered.sort((a, b) => {
           const nameA = a["Nom du cas d’usage"]?.toUpperCase() || "";
           const nameB = b["Nom du cas d’usage"]?.toUpperCase() || "";
