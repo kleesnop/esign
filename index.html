@@ -21,7 +21,7 @@
       text-align: center;
     }
     
-    /* Filtres */
+    /* Conteneur du filtre */
     #filters {
       display: flex;
       justify-content: center;
@@ -39,22 +39,21 @@
       min-width: 200px;
     }
     
-    /* Conteneur des cas d’usage (2 tuiles max par ligne) */
+    /* Conteneur des cas d’usage */
     #casContainer {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
+      display: flex;            /* On utilise flexbox */
+      flex-wrap: wrap;          /* Permet le retour à la ligne */
+      justify-content: center;  /* Centre horizontalement */
+      max-width: 1200px;        /* Largeur max de la zone */
+      margin: 0 auto;           /* Centre le conteneur */
       padding: 10px;
     }
     
-    /* Chaque tuile occupe ~50% de la largeur pour en avoir 2 par ligne */
+    /* Tuiles */
     .case-card {
       background: #fff;
-      flex: 0 0 calc(50% - 20px);
-      margin: 0;
+      width: 45%;               /* Deux tuiles par ligne (2 x 45% + marges) */
+      margin: 10px;             /* Marge autour de chaque tuile */
       padding: 15px;
       border-radius: 4px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -113,10 +112,10 @@
       color: #004080;
     }
     
-    /* Responsive : sur mobile, 1 tuile par ligne */
+    /* Responsive : 1 tuile par ligne si largeur < 768px */
     @media (max-width: 768px) {
       .case-card {
-        flex: 0 0 100%;
+        width: 90%;
       }
     }
   </style>
@@ -127,7 +126,7 @@
     <h1>Visualisation des Cas d'Usage</h1>
   </header>
   
-  <!-- Filtres : un seul, pour le département -->
+  <!-- Filtre (si besoin) -->
   <div id="filters">
     <select id="departmentFilter">
       <option value="">Tous les départements</option>
@@ -160,13 +159,13 @@
         .then(response => response.json())
         .then(jsonData => {
           data = jsonData;
-          // Tri par ordre alphabétique basé sur "Nom du cas d’usage"
+          // Tri par ordre alphabétique
           data.sort((a, b) => {
             const nameA = a["Nom du cas d’usage"]?.toUpperCase() || "";
             const nameB = b["Nom du cas d’usage"]?.toUpperCase() || "";
             return nameA.localeCompare(nameB);
           });
-
+          
           populateDepartmentFilter();
           displayCases(data);
         })
@@ -174,10 +173,9 @@
           console.error("Erreur lors du chargement du JSON :", error);
         });
 
-      // Remplissage du menu de filtre (Département)
+      // Remplir le filtre Département
       function populateDepartmentFilter() {
         const departments = new Set();
-
         data.forEach(item => {
           if (item["Département"]) {
             departments.add(item["Département"]);
@@ -192,18 +190,15 @@
         });
       }
 
-      // Écoute des changements sur le filtre Département
+      // Filtrage par Département
       departmentFilter.addEventListener("change", filterCases);
-
-      // Filtrer les cas d'usage selon le département sélectionné
       function filterCases() {
         const selectedDept = departmentFilter.value;
-
-        // On filtre la data d'origine, puis on trie par ordre alphabétique
         let filtered = data.filter(item => {
           return selectedDept ? item["Département"] === selectedDept : true;
         });
 
+        // Tri alphabétique après filtrage
         filtered.sort((a, b) => {
           const nameA = a["Nom du cas d’usage"]?.toUpperCase() || "";
           const nameB = b["Nom du cas d’usage"]?.toUpperCase() || "";
@@ -213,11 +208,11 @@
         displayCases(filtered);
       }
 
-      // Afficher les cas d'usage sous forme de cartes
+      // Afficher les cas d'usage
       function displayCases(cases) {
         casContainer.innerHTML = "";
         cases.forEach(item => {
-          const nomCas = item["Nom du cas d’usage"] || item["Nom du cas d'usage"] || "Non spécifié";
+          const nomCas = item["Nom du cas d’usage"] || "Non spécifié";
           const departement = item["Département"] || "Non spécifié";
           const niveau = item["Niveau de signature recommandé"] || "Non spécifié";
 
@@ -235,7 +230,7 @@
         });
       }
 
-      // Afficher la fiche détaillée dans un modal
+      // Modal
       function showModal(item) {
         modalDetails.innerHTML = "";
         for (const key in item) {
@@ -246,12 +241,10 @@
         modal.classList.remove("hidden");
       }
 
-      // Fermeture du modal
       closeModal.addEventListener("click", function() {
         modal.classList.add("hidden");
       });
 
-      // Fermeture du modal en cliquant à l'extérieur du contenu
       window.addEventListener("click", function(e) {
         if (e.target === modal) {
           modal.classList.add("hidden");
