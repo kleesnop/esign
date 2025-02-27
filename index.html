@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Visualisation des Cas d'Usage</title>
+  
   <!-- Inclusion de PapaParse pour le parsing du CSV -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+
   <style>
     /* Style global */
     body {
@@ -118,6 +120,7 @@
     }
   </style>
 </head>
+
 <body>
   <header>
     <h1>Visualisation des Cas d'Usage</h1>
@@ -161,6 +164,7 @@
         header: true,
         complete: function(results) {
           data = results.data;
+          console.log("Exemple de première ligne :", data[0]); // Diagnostic
           populateFilters();
           displayCases(data);
         },
@@ -175,10 +179,15 @@
         const signatures = new Set();
   
         data.forEach(item => {
-          if(item["Département"]) departments.add(item["Département"]);
-          if(item["Niveau de signature recommandé"]) signatures.add(item["Niveau de signature recommandé"]);
+          if (item["Département"]) {
+            departments.add(item["Département"]);
+          }
+          if (item["Niveau de signature recommandé"]) {
+            signatures.add(item["Niveau de signature recommandé"]);
+          }
         });
   
+        // Créer les options pour le filtre Département
         departments.forEach(dep => {
           const option = document.createElement("option");
           option.value = dep;
@@ -186,6 +195,7 @@
           departmentFilter.appendChild(option);
         });
   
+        // Créer les options pour le filtre Niveau de signature
         signatures.forEach(sig => {
           const option = document.createElement("option");
           option.value = sig;
@@ -212,16 +222,22 @@
         displayCases(filtered);
       }
   
-      // Afficher les cas d'usage sous forme de cartes
+      // Afficher les cas d'usage sous forme de cartes (3 champs principaux)
       function displayCases(cases) {
         casContainer.innerHTML = "";
+        
         cases.forEach(item => {
+          // Pour éviter un undefined, on prévoit un fallback
+          const nomCas = item["Nom du cas d’usage"] || item["Nom du cas d'usage"] || "Non spécifié";
+          const departement = item["Département"] || "Non spécifié";
+          const niveau = item["Niveau de signature recommandé"] || "Non spécifié";
+          
           const card = document.createElement("div");
           card.className = "case-card";
           card.innerHTML = `
-            <h3>${item["Nom du cas d’usage"]}</h3>
-            <p><strong>Département :</strong> ${item["Département"]}</p>
-            <p><strong>Niveau de signature :</strong> ${item["Niveau de signature recommandé"]}</p>
+            <h3>${nomCas}</h3>
+            <p><strong>Département :</strong> ${departement}</p>
+            <p><strong>Niveau de signature :</strong> ${niveau}</p>
           `;
           card.addEventListener("click", function() {
             showModal(item);
@@ -230,10 +246,11 @@
         });
       }
   
-      // Afficher la fiche détaillée dans un modal
+      // Afficher la fiche détaillée dans un modal (tous les champs)
       function showModal(item) {
         modalDetails.innerHTML = "";
-        // Afficher toutes les informations du cas d'usage
+        
+        // Pour montrer tous les champs, on parcourt l'objet
         for (const key in item) {
           const detail = document.createElement("p");
           detail.innerHTML = `<strong>${key} :</strong> ${item[key]}`;
