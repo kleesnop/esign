@@ -1,58 +1,259 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des cas d'usage</title>
-    <!-- CDN pour DataTables -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visualisation des Cas d'Usage</title>
+  <!-- Inclusion de PapaParse pour le parsing du CSV -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+  <style>
+    /* Style global */
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    
+    header {
+      background: #004080;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    /* Filtres */
+    #filters {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 20px;
+    }
+    
+    #filters select {
+      margin: 10px;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      min-width: 200px;
+    }
+    
+    /* Conteneur des cas d’usage */
+    #casContainer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 10px;
+    }
+    
+    .case-card {
+      background: #fff;
+      margin: 10px;
+      padding: 15px;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      width: 300px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    
+    .case-card:hover {
+      transform: scale(1.03);
+    }
+    
+    .case-card h3 {
+      margin-top: 0;
+      color: #004080;
+    }
+    
+    /* Modal pour détails */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    
+    .modal.hidden {
+      display: none;
+    }
+    
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 4px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 80%;
+      overflow-y: auto;
+      position: relative;
+    }
+    
+    .modal-content p {
+      margin: 10px 0;
+    }
+    
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #004080;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .case-card {
+        width: 90%;
+      }
+    }
+  </style>
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto p-4">
-        <!-- Titre principal -->
-        <h1 class="text-3xl font-bold mb-6 text-center">Cas d'usage</h1>
-        
-        <!-- Barre de navigation pour basculer entre les vues -->
-        <nav class="mb-4 flex justify-center space-x-4">
-            <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="showView('tableau')">Tableau</button>
-            <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="showView('cartes')">Cartes</button>
-            <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="showView('graphiques')">Graphiques</button>
-        </nav>
-
-        <!-- Vue Tableau -->
-        <div id="tableau" class="view">
-            <table id="usageTable" class="display w-full">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Département</th>
-                        <th>Signature</th>
-                        <th>Justification</th>
-                        <th>Risques</th>
-                        <th>Exemples</th>
-                        <th>Comparaison</th>
-                        <th>Spécificités</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-
-        <!-- Vue Cartes -->
-        <div id="cartes" class="view hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-
-        <!-- Vue Graphiques -->
-        <div id="graphiques" class="view hidden">
-            <canvas id="chartCanvas" class="w-full"></canvas>
-        </div>
+<body>
+  <header>
+    <h1>Visualisation des Cas d'Usage</h1>
+  </header>
+  
+  <!-- Filtres -->
+  <div id="filters">
+    <select id="departmentFilter">
+      <option value="">Tous les départements</option>
+    </select>
+    <select id="signatureFilter">
+      <option value="">Tous les niveaux de signature</option>
+    </select>
+  </div>
+  
+  <!-- Conteneur des cas d’usage -->
+  <div id="casContainer"></div>
+  
+  <!-- Modal pour la fiche détaillée -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="modalDetails"></div>
     </div>
-
-    <!-- Scripts nécessaires -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="app.js"></script>
+  </div>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const casContainer = document.getElementById("casContainer");
+      const departmentFilter = document.getElementById("departmentFilter");
+      const signatureFilter = document.getElementById("signatureFilter");
+      const modal = document.getElementById("modal");
+      const modalDetails = document.getElementById("modalDetails");
+      const closeModal = document.querySelector(".close");
+  
+      let data = [];
+  
+      // Chargement et parsing du fichier CSV
+      Papa.parse("cas_usages.csv", {
+        download: true,
+        header: true,
+        complete: function(results) {
+          data = results.data;
+          populateFilters();
+          displayCases(data);
+        },
+        error: function(err) {
+          console.error("Erreur lors du parsing du CSV :", err);
+        }
+      });
+  
+      // Remplissage des menus de filtres avec les valeurs uniques
+      function populateFilters() {
+        const departments = new Set();
+        const signatures = new Set();
+  
+        data.forEach(item => {
+          if(item["Département"]) departments.add(item["Département"]);
+          if(item["Niveau de signature recommandé"]) signatures.add(item["Niveau de signature recommandé"]);
+        });
+  
+        departments.forEach(dep => {
+          const option = document.createElement("option");
+          option.value = dep;
+          option.textContent = dep;
+          departmentFilter.appendChild(option);
+        });
+  
+        signatures.forEach(sig => {
+          const option = document.createElement("option");
+          option.value = sig;
+          option.textContent = sig;
+          signatureFilter.appendChild(option);
+        });
+      }
+  
+      // Écoute des changements sur les filtres
+      departmentFilter.addEventListener("change", filterCases);
+      signatureFilter.addEventListener("change", filterCases);
+  
+      // Filtrer les cas d'usage en fonction des filtres sélectionnés
+      function filterCases() {
+        const selectedDept = departmentFilter.value;
+        const selectedSig = signatureFilter.value;
+  
+        const filtered = data.filter(item => {
+          let deptMatch = selectedDept ? item["Département"] === selectedDept : true;
+          let sigMatch = selectedSig ? item["Niveau de signature recommandé"] === selectedSig : true;
+          return deptMatch && sigMatch;
+        });
+  
+        displayCases(filtered);
+      }
+  
+      // Afficher les cas d'usage sous forme de cartes
+      function displayCases(cases) {
+        casContainer.innerHTML = "";
+        cases.forEach(item => {
+          const card = document.createElement("div");
+          card.className = "case-card";
+          card.innerHTML = `
+            <h3>${item["Nom du cas d’usage"]}</h3>
+            <p><strong>Département :</strong> ${item["Département"]}</p>
+            <p><strong>Niveau de signature :</strong> ${item["Niveau de signature recommandé"]}</p>
+          `;
+          card.addEventListener("click", function() {
+            showModal(item);
+          });
+          casContainer.appendChild(card);
+        });
+      }
+  
+      // Afficher la fiche détaillée dans un modal
+      function showModal(item) {
+        modalDetails.innerHTML = "";
+        // Afficher toutes les informations du cas d'usage
+        for (const key in item) {
+          const detail = document.createElement("p");
+          detail.innerHTML = `<strong>${key} :</strong> ${item[key]}`;
+          modalDetails.appendChild(detail);
+        }
+        modal.classList.remove("hidden");
+      }
+  
+      // Fermeture du modal
+      closeModal.addEventListener("click", function() {
+        modal.classList.add("hidden");
+      });
+  
+      // Fermeture du modal en cliquant à l'extérieur du contenu
+      window.addEventListener("click", function(e) {
+        if (e.target === modal) {
+          modal.classList.add("hidden");
+        }
+      });
+    });
+  </script>
 </body>
 </html>
