@@ -160,7 +160,7 @@
         .then(response => response.json())
         .then(jsonData => {
           data = jsonData;
-          console.log("Exemple de première ligne :", data[0]); // Pour vérifier les clés
+          console.log("Exemple de première ligne :", data[0]); // Diagnostic
           populateFilters();
           displayCases(data);
         })
@@ -174,8 +174,13 @@
         const signatures = new Set();
 
         data.forEach(item => {
-          if (item["Département"]) departments.add(item["Département"]);
-          if (item["Niveau de signature recommandé"]) signatures.add(item["Niveau de signature recommandé"]);
+          // Utilisation de la clé "Département concerné" présente dans le JSON
+          if (item["Département concerné"]) {
+            departments.add(item["Département concerné"]);
+          }
+          if (item["Niveau de signature recommandé"]) {
+            signatures.add(item["Niveau de signature recommandé"]);
+          }
         });
 
         departments.forEach(dep => {
@@ -203,7 +208,7 @@
         const selectedSig = signatureFilter.value;
 
         const filtered = data.filter(item => {
-          const deptMatch = selectedDept ? item["Département"] === selectedDept : true;
+          const deptMatch = selectedDept ? item["Département concerné"] === selectedDept : true;
           const sigMatch = selectedSig ? item["Niveau de signature recommandé"] === selectedSig : true;
           return deptMatch && sigMatch;
         });
@@ -216,7 +221,8 @@
         casContainer.innerHTML = "";
         cases.forEach(item => {
           const nomCas = item["Nom du cas d’usage"] || item["Nom du cas d'usage"] || "Non spécifié";
-          const departement = item["Département"] || "Non spécifié";
+          // Ici on utilise "Département concerné" au lieu de "Département"
+          const departement = item["Département concerné"] || "Non spécifié";
           const niveau = item["Niveau de signature recommandé"] || "Non spécifié";
 
           const card = document.createElement("div");
