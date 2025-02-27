@@ -39,21 +39,25 @@
       min-width: 200px;
     }
     
-    /* Conteneur des cas d’usage */
+    /* Conteneur des cas d’usage (2 tuiles max par ligne) */
     #casContainer {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      display: flex;              /* On utilise flex pour répartir les tuiles */
+      flex-wrap: wrap;            /* Autoriser le retour à la ligne */
+      justify-content: center;    /* Centrer le contenu */
+      gap: 20px;                  /* Espacement horizontal/vertical */
+      max-width: 1200px;          /* Largeur max du conteneur */
+      margin: 0 auto;            /* Centrer le conteneur */
       padding: 10px;
     }
     
+    /* Chaque tuile occupe 45% de la largeur (pour en avoir 2 par ligne) */
     .case-card {
       background: #fff;
-      margin: 10px;
+      flex: 0 0 calc(50% - 20px); /* 2 par ligne => ~50%, en tenant compte du gap */
+      margin: 0;                  /* on laisse le gap gérer l'espacement */
       padding: 15px;
       border-radius: 4px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      width: 300px;
       cursor: pointer;
       transition: transform 0.2s;
     }
@@ -109,10 +113,10 @@
       color: #004080;
     }
     
-    /* Responsive */
+    /* Responsive : sur mobile (max 768px), on passe à 1 tuile par ligne */
     @media (max-width: 768px) {
       .case-card {
-        width: 90%;
+        flex: 0 0 100%;
       }
     }
   </style>
@@ -160,7 +164,13 @@
         .then(response => response.json())
         .then(jsonData => {
           data = jsonData;
-          console.log("Exemple de première ligne :", data[0]); // Diagnostic
+          // Tri par ordre alphabétique, basé sur "Nom du cas d’usage"
+          data.sort((a, b) => {
+            const nameA = a["Nom du cas d’usage"]?.toUpperCase() || "";
+            const nameB = b["Nom du cas d’usage"]?.toUpperCase() || "";
+            return nameA.localeCompare(nameB);
+          });
+
           populateFilters();
           displayCases(data);
         })
@@ -206,10 +216,18 @@
         const selectedDept = departmentFilter.value;
         const selectedSig = signatureFilter.value;
 
-        const filtered = data.filter(item => {
+        // On filtre la data d'origine, puis on trie par ordre alphabétique
+        let filtered = data.filter(item => {
           const deptMatch = selectedDept ? item["Département"] === selectedDept : true;
           const sigMatch = selectedSig ? item["Niveau de signature recommandé"] === selectedSig : true;
           return deptMatch && sigMatch;
+        });
+
+        // Tri par ordre alphabétique après le filtrage (optionnel, pour rester cohérent)
+        filtered.sort((a, b) => {
+          const nameA = a["Nom du cas d’usage"]?.toUpperCase() || "";
+          const nameB = b["Nom du cas d’usage"]?.toUpperCase() || "";
+          return nameA.localeCompare(nameB);
         });
 
         displayCases(filtered);
