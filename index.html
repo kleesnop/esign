@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Visualisation des Cas d'Usage</title>
   
-  <!-- Inclusion de PapaParse pour le parsing du CSV -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-
   <style>
     /* Style global */
     body {
@@ -155,47 +152,39 @@
       const modal = document.getElementById("modal");
       const modalDetails = document.getElementById("modalDetails");
       const closeModal = document.querySelector(".close");
-  
+
       let data = [];
-  
-      // Chargement et parsing du fichier CSV
-      Papa.parse("cas_usages.csv", {
-        download: true,
-        header: true,
-        complete: function(results) {
-          data = results.data;
-          console.log("Exemple de première ligne :", data[0]); // Diagnostic
+
+      // Chargement du fichier JSON
+      fetch("cas_usages.json")
+        .then(response => response.json())
+        .then(jsonData => {
+          data = jsonData;
+          console.log("Exemple de première ligne :", data[0]); // Pour vérifier les clés
           populateFilters();
           displayCases(data);
-        },
-        error: function(err) {
-          console.error("Erreur lors du parsing du CSV :", err);
-        }
-      });
-  
+        })
+        .catch(error => {
+          console.error("Erreur lors du chargement du JSON :", error);
+        });
+
       // Remplissage des menus de filtres avec les valeurs uniques
       function populateFilters() {
         const departments = new Set();
         const signatures = new Set();
-  
+
         data.forEach(item => {
-          if (item["Département"]) {
-            departments.add(item["Département"]);
-          }
-          if (item["Niveau de signature recommandé"]) {
-            signatures.add(item["Niveau de signature recommandé"]);
-          }
+          if (item["Département"]) departments.add(item["Département"]);
+          if (item["Niveau de signature recommandé"]) signatures.add(item["Niveau de signature recommandé"]);
         });
-  
-        // Créer les options pour le filtre Département
+
         departments.forEach(dep => {
           const option = document.createElement("option");
           option.value = dep;
           option.textContent = dep;
           departmentFilter.appendChild(option);
         });
-  
-        // Créer les options pour le filtre Niveau de signature
+
         signatures.forEach(sig => {
           const option = document.createElement("option");
           option.value = sig;
@@ -203,35 +192,33 @@
           signatureFilter.appendChild(option);
         });
       }
-  
+
       // Écoute des changements sur les filtres
       departmentFilter.addEventListener("change", filterCases);
       signatureFilter.addEventListener("change", filterCases);
-  
-      // Filtrer les cas d'usage en fonction des filtres sélectionnés
+
+      // Filtrer les cas d'usage selon les filtres sélectionnés
       function filterCases() {
         const selectedDept = departmentFilter.value;
         const selectedSig = signatureFilter.value;
-  
+
         const filtered = data.filter(item => {
-          let deptMatch = selectedDept ? item["Département"] === selectedDept : true;
-          let sigMatch = selectedSig ? item["Niveau de signature recommandé"] === selectedSig : true;
+          const deptMatch = selectedDept ? item["Département"] === selectedDept : true;
+          const sigMatch = selectedSig ? item["Niveau de signature recommandé"] === selectedSig : true;
           return deptMatch && sigMatch;
         });
-  
+
         displayCases(filtered);
       }
-  
-      // Afficher les cas d'usage sous forme de cartes (3 champs principaux)
+
+      // Afficher les cas d'usage sous forme de cartes
       function displayCases(cases) {
         casContainer.innerHTML = "";
-        
         cases.forEach(item => {
-          // Pour éviter un undefined, on prévoit un fallback
           const nomCas = item["Nom du cas d’usage"] || item["Nom du cas d'usage"] || "Non spécifié";
           const departement = item["Département"] || "Non spécifié";
           const niveau = item["Niveau de signature recommandé"] || "Non spécifié";
-          
+
           const card = document.createElement("div");
           card.className = "case-card";
           card.innerHTML = `
@@ -245,12 +232,10 @@
           casContainer.appendChild(card);
         });
       }
-  
-      // Afficher la fiche détaillée dans un modal (tous les champs)
+
+      // Afficher la fiche détaillée dans un modal
       function showModal(item) {
         modalDetails.innerHTML = "";
-        
-        // Pour montrer tous les champs, on parcourt l'objet
         for (const key in item) {
           const detail = document.createElement("p");
           detail.innerHTML = `<strong>${key} :</strong> ${item[key]}`;
@@ -258,12 +243,12 @@
         }
         modal.classList.remove("hidden");
       }
-  
+
       // Fermeture du modal
       closeModal.addEventListener("click", function() {
         modal.classList.add("hidden");
       });
-  
+
       // Fermeture du modal en cliquant à l'extérieur du contenu
       window.addEventListener("click", function(e) {
         if (e.target === modal) {
